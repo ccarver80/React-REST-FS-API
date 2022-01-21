@@ -3,7 +3,6 @@ import Courses from './Components/Courses';
 
 function App() {
 
-
   return (
     <Courses />
   );
