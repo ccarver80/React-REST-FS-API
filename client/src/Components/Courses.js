@@ -2,16 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 function Courses() {
-  const [courses, setCourse] = useState([]);
+  // const [courses, setCourse] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      await fetch("http://localhost:5000/api/courses")
-      .then((res) => res.json())
-      .then((data) => setCourse(data));
-  };
-      fetchData(); 
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await fetch("http://localhost:5000/api/courses")
+  //     .then((res) => res.json())
+  //     .then((data) => setCourse(data));
+  // };
+  //     fetchData(); 
+  // }, []);
 
   return (
     // <div className="wrap main--grid">
