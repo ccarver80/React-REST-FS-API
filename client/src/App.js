@@ -1,18 +1,23 @@
 import React from 'react';
 import './styles/global.css'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
 //Components:
 import Courses from './Components/Courses';
+import CourseDetail from './Components/CourseDetail'; 
 
 
 function App() {
   
-    //Will not render component, tried using the "return () aswell."
+    return (
      <BrowserRouter>
-       <Route path="/" component={Courses} />
+      <Routes>
+        <Route exact path="/" element={<Courses />} />
+        <Route path="/api/courses/:id" element={<CourseDetail />} />
+      </Routes>
+       
      </BrowserRouter>
-    
+    )
      
 }
 
