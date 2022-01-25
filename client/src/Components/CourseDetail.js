@@ -1,58 +1,95 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { useState, useEffect } from "react";
-import { useParams, Link } from 'react-router-dom'
-
+import ReactMarkdown from 'react-markdown'
+import { useParams, Link } from "react-router-dom";
 
 function CourseDetail() {
+  const [course, setCourse] = useState([]);
+  
+  let params = useParams(); //Gets the ":id" Param from the url clicked
 
-    const [course, setCourse] = useState([]);
+  useEffect(() => {
+    function fetchData() {
+       fetch("http://localhost:5000/api/courses/" + params.id)
+        .then((res) => res.json())
+        .then((data) => setCourse(data))
+        .catch(err => console.log("OH NO", err));
+    }
+    fetchData();
+  }, []);
 
-    let params = useParams(); //Gets the ":id" Param from the url clicked
 
-    useEffect(() => {
-        async function fetchData() {
-          await fetch('http://localhost:5000/api/courses/' + params.id)
-          .then((res) => res.json())
-          .then((data) => setCourse(data));
-      };
-          fetchData(); 
-      }, []);
 
-      console.log(course)
-    return (
-    <body>
-        <header>
+return (
+// ================================================================================== 
+//                        Header with Login Info
+    <div>
+      <header>    
         <div className="wrap header--flex">
-            <h1 className="header--logo"><Link to="/">Courses</Link></h1>
-            <nav>
-                <ul className="header--signedin">
-                        {/* ADD LOGIN USERNAME */}
-                    <li>Welcome, </li>
-                             {/* ADD SIGNIN ROUTE */}
-                    <li><Link to="SIGNOUT ROUTE">Sign Out</Link></li>
-                </ul>
-            </nav>
+          <h1 className="header--logo">
+            <Link to="/">Courses</Link>
+          </h1>
+          <nav>
+            <ul className="header--signedin">
+              {/* ADD LOGIN USERNAME */}
+              <li>Welcome, </li>
+              {/* ADD SIGNIN ROUTE */}
+              <li>
+                <Link to="SIGNOUT ROUTE">Sign Out</Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-    </header>
+      </header>
+{/*==============================================================================================*/}
+                             {/* Link buttons */}
+      <main>
+        <div className="actions--bar">
+          <div className="wrap">
+            {/* UPDATE COURESE ROUTE */}
+            <Link className="button" to="update-course.html">
+              Update Course
+            </Link>
+            {/* Delete course route  */}
+            <Link className="button" to="#">
+              Delete Course
+            </Link>
 
-    <main>
-            <div className="actions--bar">
-                <div className="wrap">            
-                                                {/* UPDATE COURESE ROUTE */}
-                    <Link className="button" to="update-course.html">Update Course</Link>
-                                                {/* Delete course route  */}
-                    <Link className="button" to="#">Delete Course</Link>
+            <Link className="button button-secondary" to="/">
+              Return to List
+            </Link>
+          </div>
+        </div>
+{/* ========================================================================================== */}
+                            {/* Course title and details */}
+        <div className="wrap">
+          <h2>Course Detail</h2>
+          <form>
+            <div className="main--flex">
+              <div>
+                <h3 className="course--detail--title">Course</h3>
+                <h4 className="course--name">{course.title}</h4>
+                {/* <p>By {course.User.firstName}</p>    WILL NOT RENDER KEEPS THROWING A "UNDEFINED" ERROR */}
 
-                    <Link className="button button-secondary" to="/">Return to List</Link>
-                </div>
+                {/* Markdown description */}
+                <ReactMarkdown children={course.description} />
+              </div>
+              <div>
+                <h3 className="course--detail--title">Estimated Time</h3>
+                <p>{course.estimatedTime}</p>
+
+                <h3 className="course--detail--title">Materials Needed</h3>
+                <ul className="course--detail--list">
+                  <ReactMarkdown children={course.materialsNeeded} />
+                </ul>
+                
+              </div>
             </div>
-
-            
-    </main>
-    </body>
-    )
-        
-    
+          </form>
+        </div>
+      </main>
+    </div>
+  );
 }
 
-export default CourseDetail; 
+export default CourseDetail;

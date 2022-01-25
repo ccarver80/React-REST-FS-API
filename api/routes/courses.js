@@ -35,6 +35,7 @@ router.get("/api/courses/:id", async (req, res) => {
       },
       include: {
         model: users,
+        as: 'User',
         attributes: {
           exclude: ['id', 'password', 'createdAt', 'updatedAt']
         }
