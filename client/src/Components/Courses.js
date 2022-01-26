@@ -15,6 +15,19 @@ function Courses() {
   }, []);
 
   return (
+    <body>
+    <header>
+            <div className="wrap header--flex">
+                <h1 className="header--logo"><Link to="/">Courses</Link></h1>
+                <nav>
+                    <ul className="header--signedout">
+                        <li><Link to="/signup">Sign Up</Link></li>
+                        <li><Link to="sign-in.html">Sign In</Link></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
     <div className="wrap main--grid">
       {/* Map over all courses in datatbase */}
       {courses.map((course) => (
@@ -46,7 +59,7 @@ function Courses() {
       </Link>
     </div>
 
-    
+    </body>
   );
 }
 

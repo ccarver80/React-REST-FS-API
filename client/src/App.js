@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 //Components:
 import Courses from './Components/Courses';
 import CourseDetail from './Components/CourseDetail'; 
+import UserSignIn from './Components/UserSignIn'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Courses />} />
         <Route path="/api/courses/:id" element={<CourseDetail />} />
+        <Route path="/signup" element={<UserSignIn />} />
       </Routes>
        
      </BrowserRouter>
