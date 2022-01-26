@@ -4,9 +4,11 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
 //Components:
 import Courses from './Components/Courses';
-import CourseDetail from './Components/CourseDetail'; 
+import CourseDetail from './Components/CourseDetail';
+import UserSignUp from './Components/UserSignUp'; 
 import UserSignIn from './Components/UserSignIn'
-
+import CreateCourse from './Components/CreateCourse';
+import UpdateCourse from './Components/UpdateCourse'
 
 function App() {
   
@@ -15,7 +17,10 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Courses />} />
         <Route path="/api/courses/:id" element={<CourseDetail />} />
-        <Route path="/signup" element={<UserSignIn />} />
+        <Route path="/sign-up" element={<UserSignUp />} />
+        <Route path='/sign-in' element={<UserSignIn />} />
+        <Route path='/create-course' element={<CreateCourse />} />
+        <Route path='/update-course' element={<UpdateCourse />} />
       </Routes>
        
      </BrowserRouter>

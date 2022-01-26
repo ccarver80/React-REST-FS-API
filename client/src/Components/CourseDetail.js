@@ -44,12 +44,12 @@ function CourseDetail() {
       <main>
         <div className="actions--bar">
           <div className="wrap">
-            {/* UPDATE COURESE ROUTE */}
-            <Link className="button" to="update-course.html">
+            
+            <Link className="button" to="/update-course">
               Update Course
             </Link>
-            {/* Delete course route  */}
-            <Link className="button" to="#">
+            
+            <Link className="button" to="/delete-course">
               Delete Course
             </Link>
 

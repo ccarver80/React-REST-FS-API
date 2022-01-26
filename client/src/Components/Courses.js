@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
+import Header from "./Header";
 
 function Courses() {
   const [courses, setCourse] = useState([]);
@@ -16,17 +17,7 @@ function Courses() {
 
   return (
     <body>
-    <header>
-            <div className="wrap header--flex">
-                <h1 className="header--logo"><Link to="/">Courses</Link></h1>
-                <nav>
-                    <ul className="header--signedout">
-                        <li><Link to="/signup">Sign Up</Link></li>
-                        <li><Link to="sign-in.html">Sign In</Link></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+    <Header />
 
     <div className="wrap main--grid">
       {/* Map over all courses in datatbase */}
@@ -41,7 +32,7 @@ function Courses() {
       
       <Link
         className="course--module course--add--module"
-        to=""
+        to="/create-course"
       >
         <span className="course--add--title">
           <svg
