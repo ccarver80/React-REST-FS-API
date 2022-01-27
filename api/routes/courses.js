@@ -81,7 +81,7 @@ router.post("/api/courses/", authUser, async (req, res) => {
 
 //---------------------PUT ROUTE----------------------------//
 
-router.put("/api/courses/:id", authUser, async (req, res) => {
+router.put("/api/courses/:id", /*authUser,*/ async (req, res) => {
   try {
     const findCourse = await courses.findOne({
       where: {

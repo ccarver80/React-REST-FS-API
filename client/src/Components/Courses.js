@@ -22,7 +22,7 @@ function Courses() {
     <div className="wrap main--grid">
       {/* Map over all courses in datatbase */}
       {courses.map((course) => (
-        <Link className="course--module course--link" to={"/api/courses/" + course.id }>
+        <Link className="course--module course--link" to={"/course/" + course.id }>
           <h2 className="course--label">Course</h2>
           <h3 className="course--title">{course.title}</h3>
         </Link>

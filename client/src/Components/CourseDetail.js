@@ -45,7 +45,7 @@ function CourseDetail() {
         <div className="actions--bar">
           <div className="wrap">
             
-            <Link className="button" to="/update-course">
+            <Link className="button" to={"/update-course/" + params.id}>
               Update Course
             </Link>
             

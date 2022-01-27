@@ -5,12 +5,7 @@ import Header from "./Header";
 
 function UserSignUp() {
 
-    const [userInfo, setUserInfo] = useState({
-        "firstName": '', 
-        "lastName": '',
-        'emailAddress': '', 
-        'password': '', 
-    })
+    const [userInfo, setUserInfo] = useState({})
 
     const sendUserInfo = async(e) => {
             e.preventDefault(); 
@@ -22,8 +17,8 @@ function UserSignUp() {
             }, 
             body: JSON.stringify(userInfo)
         })
-        .then(res => res.json()) // Getting a "SyntaxError: Unexpected token C in JSON at position 0"
-        .then()
+        .then(res =>  res.json())
+        .then(data => console.log(data)) 
         .catch((err) => {
             console.log(err)
         })

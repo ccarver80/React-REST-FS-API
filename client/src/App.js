@@ -14,13 +14,14 @@ function App() {
   
     return (
      <BrowserRouter>
+
       <Routes>
         <Route exact path="/" element={<Courses />} />
-        <Route path="/api/courses/:id" element={<CourseDetail />} />
+        <Route path="/course/:id" element={<CourseDetail />} />
         <Route path="/sign-up" element={<UserSignUp />} />
         <Route path='/sign-in' element={<UserSignIn />} />
         <Route path='/create-course' element={<CreateCourse />} />
-        <Route path='/update-course' element={<UpdateCourse />} />
+        <Route path='/update-course/:id' element={<UpdateCourse />} />
       </Routes>
        
      </BrowserRouter>
