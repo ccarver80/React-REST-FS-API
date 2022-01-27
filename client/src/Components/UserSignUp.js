@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useNavigate, Redirect} from 'react-router-dom'
 import {useState, useEffect,} from 'react'
 import Header from "./Header";
 
@@ -12,16 +12,18 @@ function UserSignUp() {
         'password': '', 
     })
 
-    const sendUserInfo = (e) => {
+    const sendUserInfo = async(e) => {
             e.preventDefault(); 
             console.log(userInfo)
-        fetch('http://localhost:5000/api/users', {
+       await fetch('http://localhost:5000/api/users', {
             method: 'POST', 
             headers : {
                 'Content-Type': 'application/json', 
             }, 
             body: JSON.stringify(userInfo)
         })
+        .then(res => res.json()) // Getting a "SyntaxError: Unexpected token C in JSON at position 0"
+        .then()
         .catch((err) => {
             console.log(err)
         })
