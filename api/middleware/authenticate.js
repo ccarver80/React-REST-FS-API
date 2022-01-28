@@ -16,21 +16,17 @@ exports.authUser = async (req, res, next) => {
       if (authenticate) {
         req.currentUser = user; 
         next(); 
-      } else {
+      }else {
+        res.status(401)
         res.json({
-          message: "Passwords dont match",
+          message: "Access Denied",
         });
       }
-    } else {
+      }else {
       res.json({
         message: "Username does not exist",
       });
     }
-  } else {
-    res.status(401)
-    res.json({
-      message: "Access Denied",
-    });
-  }
+  } 
   
 };
