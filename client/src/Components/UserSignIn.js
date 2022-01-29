@@ -1,51 +1,31 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate}  from 'react-router-dom'
 
 
-function UserSignIn() {
-
+const UserSignIn = (props) => {
     const [userLoginInfo, setUserInfo] = useState({})
 
+    const nav = useNavigate(); 
 
-        // Build in auth. to check user signin info
-        const sendUserInfo = async(e) => {
-            e.preventDefault(); 
-            const encodedCreds = btoa(`${userLoginInfo.emailAddress}:${userLoginInfo.password}`)
-       await fetch('http://localhost:5000/api/users', {
-            method: 'GET', 
-            headers : {
-                'Content-Type': 'application/json', 
-                'Authorization': `Basic ${encodedCreds}`
-            }, 
+    const handleSubmit = async(e) => {
 
-        })
-        .then(res => {
-            if(res.ok){
-                const json = res.json(); 
-                console.log(json)
-            }else {
-                const json = res.json(); 
-                console.log(json)
-            }
-        })
+        e.preventDefault();
+        await props.onLogin(userLoginInfo); 
+         if(props.auth) {
+            nav('/')
+        }
         
-         
-        .catch((err) => {
-            console.log(err)
-        })
         
     }
-   
-
     return(
         <body>
-        <Header />
+        <Header name={props.info}/>
         <main>
-            <div class="form--centered">
+            <div className="form--centered">
                 <h2>Sign In</h2>
                 
-                <form onSubmit={sendUserInfo}>
+                <form onSubmit={handleSubmit} >
                     <label htmlFor="emailAddress">Email Address</label>
                     <input id="emailAddress" name="emailAddress" type="email"  value={userLoginInfo.emailAddress} onChange={(e) => setUserInfo({...userLoginInfo, emailAddress: e.target.value})} />
                     <label htmlFor="password">Password</label>

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom'
 
-function Header() {
+function Header(props) {
+
+  
+
     return(
         <header>
         <div className="wrap header--flex">
@@ -11,10 +14,16 @@ function Header() {
           <nav>
             <ul className="header--signedout">
               <li>
-                <Link to="/sign-up">Sign Up</Link>
+              {props.auth
+                ? <li>{`Welcome ${props.name}`}</li> //Auth true, Show name
+                : <Link to="/sign-up">Sign up</Link> //Auth false, Sign up link
+              }
               </li>
               <li>
-                <Link to="/sign-in">Sign In</Link>
+              {props.auth
+                ? <Link to="sign-out">Sign Out</Link> //Auth true Sign out link next to name
+                : <Link to="/sign-in">Sign In</Link> //Auth false Sign in link next to sign up link
+              }
               </li>
             </ul>
           </nav>

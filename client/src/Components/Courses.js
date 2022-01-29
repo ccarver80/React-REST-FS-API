@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import Header from "./Header";
 
-function Courses() {
+function Courses(props) {
   const [courses, setCourse] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function Courses() {
 
   return (
     <body>
-    <Header />
+    <Header auth={props.auth} name={props.name}/>
 
     <div className="wrap main--grid">
       {/* Map over all courses in datatbase */}
@@ -29,7 +29,6 @@ function Courses() {
       ))}
 
       {/* Add new course  */}
-      
       <Link
         className="course--module course--add--module"
         to="/create-course"
