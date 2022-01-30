@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from 'react-router-dom'
 
 function Header(props) {
 
-  
 
     return(
         <header>

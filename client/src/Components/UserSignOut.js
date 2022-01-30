@@ -1,8 +1,10 @@
-import react, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react' 
+
+import Courses from './Courses'
+import { useEffect, useState } from 'react'
 
 const UserSignOut = (props) => {
-    const [clear, setClear] = useState({})
+    const [clear] = useState({})
 
     useEffect(()=> {
         const clearData = () => {
@@ -14,8 +16,7 @@ const UserSignOut = (props) => {
 
     return(
         <div>
-        <h1>Sucsessfully signed out!</h1>
-        <Link to='/'><button>click here to go back</button></Link>
+        <Courses />
         </div>
     )
 }

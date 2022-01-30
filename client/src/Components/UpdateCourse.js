@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import Header from "./Header";
+
 import { Link, useParams } from 'react-router-dom'
 
 function UpdateCourse() {
@@ -15,7 +15,7 @@ function UpdateCourse() {
             .catch((err) => console.log("OH NO:", err));
         }
         fetchData();
-      }, []);
+      });
     
       const updateCourse = async(e) => {
         e.preventDefault(); 
@@ -35,7 +35,7 @@ function UpdateCourse() {
 
     return(
         <body>
-            <Header />
+            
             <main>
             <div class="wrap">
                 <h2>Update Course</h2>

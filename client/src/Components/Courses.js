@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import Header from "./Header";
+
 
 function Courses(props) {
   const [courses, setCourse] = useState([]);
@@ -16,8 +16,8 @@ function Courses(props) {
   }, []);
 
   return (
-    <body>
-    <Header auth={props.auth} name={props.name}/>
+    
+    
 
     <div className="wrap main--grid">
       {/* Map over all courses in datatbase */}
@@ -49,7 +49,7 @@ function Courses(props) {
       </Link>
     </div>
 
-    </body>
+    
   );
 }
 

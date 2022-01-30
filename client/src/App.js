@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./styles/global.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, } from "react-router-dom";
 
 //Components:
+import Header from "./Components/Header";
 import Courses from "./Components/Courses";
 import CourseDetail from "./Components/CourseDetail";
 import UserSignUp from "./Components/UserSignUp";
@@ -11,10 +12,16 @@ import CreateCourse from "./Components/CreateCourse";
 import UpdateCourse from "./Components/UpdateCourse";
 import UserSignOut from "./Components/UserSignOut";
 
+
+
+
+
+
 function App() {
   const [userLoginInfo, setLoginInfo] = useState({});
   const [userAuth, setAuth] = useState(false);
   const [name, setUserName] = useState({});
+  
 
   const getInfo = (value) => setLoginInfo(value);
 
@@ -37,10 +44,11 @@ function App() {
             //If data.firstname exists, that means the fetch properly authorized, sends username to header and setAuth to true
             setUserName(data.firstName);
             setAuth(true);
-            console.log("true");
-          } else {
+          } 
+          
+          else {
             setUserName({}); //If signed out button is clicked, clears name object
-            setAuth(false); // and returns false to auth
+            setAuth(false, data); // and returns false to auth
           }
         })
         .catch((err) => {
@@ -49,18 +57,20 @@ function App() {
     };
     //calls the function anytime the userLoginInfo state changes.
     sendUserInfo();
-    console.log(userLoginInfo);
+    ;
   }, [userLoginInfo]);
 
   const removeLoginInfo = (value) => setLoginInfo(value);
 
   return (
+    
     <BrowserRouter>
+    <Header auth={userAuth} name={name}/>
       <Routes>
         <Route
           exact
           path="/"
-          element={<Courses auth={userAuth} name={name} />}
+          element={<Courses />}
         />
         <Route path="/course/:id" element={<CourseDetail />} />
         <Route path="/sign-up" element={<UserSignUp />} />

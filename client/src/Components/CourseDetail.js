@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, Link } from "react-router-dom";
@@ -16,31 +16,10 @@ function CourseDetail() {
         .catch((err) => console.log("OH NO", err));
     }
     fetchData();
-  }, []);
+  }, );
 
   return (
-    // ==================================================================================
-    //                        Header with Login Info
-    <div>
-      <header>
-        <div className="wrap header--flex">
-          <h1 className="header--logo">
-            <Link to="/">Courses</Link>
-          </h1>
-          <nav>
-            <ul className="header--signedin">
-              {/* ADD LOGIN USERNAME */}
-              <li>Welcome, </li>
-              {/* ADD SIGNIN ROUTE */}
-              <li>
-                <Link to="SIGNOUT ROUTE">Sign Out</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      {/*==============================================================================================*/}
-      {/* Link buttons */}
+      // {/* Link buttons */}
       <main>
         <div className="actions--bar">
           <div className="wrap">
@@ -95,7 +74,7 @@ function CourseDetail() {
           </form>
         </div>
       </main>
-    </div>
+    
   );
 }
 
