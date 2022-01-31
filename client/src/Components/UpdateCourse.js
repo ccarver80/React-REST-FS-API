@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from "react";
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, Navigate, useNavigate} from 'react-router-dom'
 
 function UpdateCourse() {
     const [course, setCourse] = useState({});
 
     let params = useParams(); //Gets the ":id" Param from the url clicked
+
+    const nav = useNavigate(); 
 
     useEffect(() => {
         function fetchData() {
@@ -15,7 +17,7 @@ function UpdateCourse() {
             .catch((err) => console.log("OH NO:", err));
         }
         fetchData();
-      });
+      }, [setCourse]);
     
       const updateCourse = async(e) => {
         e.preventDefault(); 
@@ -30,6 +32,7 @@ function UpdateCourse() {
          .catch((err) => {
              console.log(err)
          })
+         nav('/course/' + params.id)
       }
 
 
@@ -45,15 +48,14 @@ function UpdateCourse() {
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" placeholder={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
 
-                                {/* TODO: Render logged in name */}
-                            <p>By Joe Smith</p>
+                            <p>By {course.firstName}</p>
 
                             <label for="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" value={course.description}></textarea>
+                            <textarea id="courseDescription" name="courseDescription" placeholder={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>
                         </div>
                         <div>
                             <label for="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" value={course.estimatedTime} />
+                            <input id="estimatedTime" name="estimatedTime" type="text" placeholder={course.estimatedTime} onChange={(e) => setCourse({...course, estimatedTime: e.target.value})} />
 
                             <label for="materialsNeeded">Materials Needed</label>
                             <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded}></textarea>

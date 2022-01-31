@@ -20,7 +20,7 @@ function Header(props) {
               </li>
               <li>
               {props.auth
-                ? <Link to="sign-out">Sign Out</Link> //Auth true Sign out link next to name
+                ? <Link to="/sign-out">Sign Out</Link> //Auth true Sign out link next to name
                 : <Link to="/sign-in">Sign In</Link> //Auth false Sign in link next to sign up link
               }
               </li>

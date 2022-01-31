@@ -16,7 +16,7 @@ function CourseDetail() {
         .catch((err) => console.log("OH NO", err));
     }
     fetchData();
-  }, );
+  }, [setCourse] );
 
   return (
       // {/* Link buttons */}
