@@ -19,12 +19,15 @@ function CreateCourse(props)  {
     
 
     const createCourse = async(e) => {
-        
+        const encodedCreds = btoa(
+            `${props.creds.emailAddress}:${props.creds.password}`
+          );
         e.preventDefault(); 
    await fetch('http://localhost:5000/api/courses', {
         method: 'POST', 
         headers : {
             'Content-Type': 'application/json', 
+            Authorization: `Basic ${encodedCreds}`,
         }, 
         body: JSON.stringify(course)
     })
@@ -58,7 +61,7 @@ function CreateCourse(props)  {
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
 
-                            <p>By {}</p>
+                            <p>By {props.name.firstName} {props.name.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>

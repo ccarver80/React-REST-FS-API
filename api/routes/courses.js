@@ -63,7 +63,7 @@ router.get("/api/courses/:id", async (req, res) => {
 
 //-----------------POST ROUTES-----------------------//
 
-router.post("/api/courses/",  async (req, res) => {
+router.post("/api/courses/", authUser,  async (req, res) => {
   try {
       console.log(req.body)
       const newCourse = await courses.create(req.body);
@@ -81,7 +81,7 @@ router.post("/api/courses/",  async (req, res) => {
 
 //---------------------PUT ROUTE----------------------------//
 
-router.put("/api/courses/:id", /*authUser,*/ async (req, res) => {
+router.put("/api/courses/:id", authUser, async (req, res) => {
   try {
     const findCourse = await courses.findOne({
       where: {
@@ -110,6 +110,7 @@ router.put("/api/courses/:id", /*authUser,*/ async (req, res) => {
 
 router.delete("/api/courses/:id", authUser, async (req, res) => {
   try {
+    console.log('DELETING')
     const findCourse = await courses.findOne({
       where: {
         id: req.params.id,
@@ -118,7 +119,8 @@ router.delete("/api/courses/:id", authUser, async (req, res) => {
 
     if (findCourse) {
       const deleteCourse = await findCourse.destroy();
-      res.sendStatus(204);
+      res.status(204);
+      res.end();
     } else {
       res.json({
         message: "This course may not exisit",

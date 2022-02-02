@@ -1,11 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+
+
 
 function CourseDetail(props) {
   const [course, setCourse] = useState([]);
 
+
+  const nav = useNavigate();
+  
   let params = useParams(); //Gets the ":id" Param from the url clicked
 
   useEffect(() => {
@@ -18,25 +23,43 @@ function CourseDetail(props) {
     fetchData();
   }, [setCourse] );
 
-  console.log(course)
+
+  const deleteCourse = async(e) => {
+    
+    const encodedCreds = btoa(
+      `${props.creds.emailAddress}:${props.creds.password}`
+    );
+    e.preventDefault(); 
+    await fetch('http://localhost:5000/api/courses/' + params.id, {
+         method: 'DELETE', 
+         headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${encodedCreds}`,
+        },
+  }).then(res => res.json())
+    .then(data => console.log(data))
+    .catch((err) => console.log(err))
+    nav('/')
+}; 
+
   return (
       // {/* Link buttons */}
       <main>
         <div className="actions--bar">
           <div className="wrap">
           
-          {/* Checks for authentication from app.js, and if the user is equal to author of article */}
+          {/* Checks for authentication from app.js, and if the user is equal to author of article, to show link to update the class */}
             {props.auth && props.userId === course.userId ? 
             <Link className="button" to={"/update-course/" + params.id}>
               Update Course
             </Link>
             : ""}
 
-            {/* rinse and repeat code from above */}
+            {/* rinse and repeat code from above only for showing the delete button */}
             {props.auth && props.userId === course.userId ? 
-            <Link className="button" to="/delete-course">
+            <button className="button" onClick={deleteCourse}>
               Delete Course
-            </Link>
+            </button>
             : ''
             } 
 

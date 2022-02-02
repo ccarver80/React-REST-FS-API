@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 
 import { Link, useParams, Navigate, useNavigate} from 'react-router-dom'
 
-function UpdateCourse() {
+function UpdateCourse(props) {
     const [course, setCourse] = useState({});
 
     let params = useParams(); //Gets the ":id" Param from the url clicked
@@ -20,11 +20,15 @@ function UpdateCourse() {
       }, [setCourse]);
     
       const updateCourse = async(e) => {
+        const encodedCreds = btoa(
+            `${props.creds.emailAddress}:${props.creds.password}`
+          );
         e.preventDefault(); 
         await fetch('http://localhost:5000/api/courses/' + params.id, {
              method: 'PUT', 
              headers : {
                  'Content-Type': 'application/json', 
+                 Authorization: `Basic ${encodedCreds}`,
              }, 
              body: JSON.stringify(course)
          })

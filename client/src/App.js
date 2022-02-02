@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles/global.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+
 //==========Components:========================================================//
   import Header from "./Components/Header";
   import Courses from "./Components/Courses";
@@ -19,6 +20,7 @@ function App() {
   const [userAuth, setAuth] = useState(false); // True/False if user is logged in or not
   const [name, setUserName] = useState({
     firstName: '',
+    lastName: '', 
     id: ''
   }); //Gets users first name and id after fetch request to api was successful 
 
@@ -32,8 +34,6 @@ function App() {
   useEffect(async() => {
    
     const sendUserInfo = async (e) => {
-      
-      
       const encodedCreds = btoa(
         `${userLoginInfo.emailAddress}:${userLoginInfo.password}`
       );
@@ -51,11 +51,11 @@ function App() {
             if(data.firstName) {
               setUserName({
                 firstName: data.firstName,
+                lastName: data.lastName, 
                 id: data.id
               })  
               setAuth(true);
-              console.log('NAME', name)
-
+              
             }
             else {
               setErrorMessage(data.message)//sends error message back to login
@@ -80,17 +80,18 @@ function App() {
       <Header auth={userAuth} name={name} />
       <Routes>
         <Route exact path="/" element={<Courses />} />
-        <Route path="/course/:id" element={<CourseDetail auth={userAuth} userId={name.id} />} />
+
+        <Route path="/course/:id" element={<CourseDetail auth={userAuth} creds={userLoginInfo} userId={name.id} />} />
+
         <Route path="/sign-up" element={<UserSignUp onLogin={getInfo} />} />
-        <Route
-          path="/sign-in"
-          element={<UserSignIn auth={userAuth} error={errorMessage} onLogin={getInfo} />}
-        />
-        <Route path="/create-course" element={<CreateCourse name={name}/>} />
-        <Route path="/update-course/:id" element={<UpdateCourse />} />
-        <Route
-          path="/sign-out"
-          element={<UserSignOut removeLoginInfo={removeLoginInfo} />}
+
+        <Route path="/sign-in" element={<UserSignIn auth={userAuth} error={errorMessage} onLogin={getInfo} />}/>
+
+        <Route path="/create-course" element={<CreateCourse creds={userLoginInfo} name={name}/>} />
+
+        <Route path="/update-course/:id" element={<UpdateCourse creds ={userLoginInfo}/>} />
+
+        <Route path="/sign-out" element={<UserSignOut removeLoginInfo={removeLoginInfo} />}
         />
       </Routes>
     </BrowserRouter>
