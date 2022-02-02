@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles/global.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 //==========Components:========================================================//
   import Header from "./Components/Header";
@@ -12,6 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
   import CreateCourse from "./Components/CreateCourse";
   import UpdateCourse from "./Components/UpdateCourse";
   import UserSignOut from "./Components/UserSignOut";
+  import PrivateRoute from "./PrivateRoute";
 //=============================================================================//
 
 
@@ -25,7 +25,6 @@ function App() {
   }); //Gets users first name and id after fetch request to api was successful 
 
 
-  const [errorMessage, setErrorMessage] = useState('')
 
   const getInfo = (value) => setLoginInfo(value); //gets login info from UserSignIn component
   const removeLoginInfo = (value) => setLoginInfo(value); //gets the empty object back from UserSignOut component
@@ -58,7 +57,7 @@ function App() {
               
             }
             else {
-              setErrorMessage(data.message)//sends error message back to login
+              
               setUserName({}); //If signed out button is clicked, clears name object
               setAuth(false); // and returns false to auth
             }
@@ -85,14 +84,19 @@ function App() {
 
         <Route path="/sign-up" element={<UserSignUp onLogin={getInfo} />} />
 
-        <Route path="/sign-in" element={<UserSignIn auth={userAuth} error={errorMessage} onLogin={getInfo} />}/>
+        <Route path="/sign-in" element={<UserSignIn auth={userAuth} onLogin={getInfo} />}/>
+{/* ===============================Protected Routes ================================================================= */}
+        <Route element={<PrivateRoute auth={userAuth}/>}>
 
-        <Route path="/create-course" element={<CreateCourse creds={userLoginInfo} name={name}/>} />
+          <Route path="/create-course" element={<CreateCourse creds={userLoginInfo} name={name}/>} />
 
-        <Route path="/update-course/:id" element={<UpdateCourse creds ={userLoginInfo}/>} />
+          <Route path="/update-course/:id" element={<UpdateCourse creds ={userLoginInfo}/>} />
 
-        <Route path="/sign-out" element={<UserSignOut removeLoginInfo={removeLoginInfo} />}
-        />
+        </Route>
+{/* ================================================================================================================== */}
+        <Route path="/sign-out" element={<UserSignOut removeLoginInfo={removeLoginInfo} />} />
+
+        
       </Routes>
     </BrowserRouter>
   );

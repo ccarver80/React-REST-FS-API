@@ -8,21 +8,24 @@ function CreateCourse(props)  {
     const nav = useNavigate();
 
     const [course, setCourse] = useState({
-        title: '',
-        description: '',
-        estimatedTime: '',
-        materialsNeeded: '',
         userId: props.name.id,
-
     })
+     const [data, setData] = useState(12)
+   
+    // ======================CLEARS ALL DATA===========================
+            useEffect(() => {
+                
+                setData()
+            }, [setData])
 
-    
-
-    const createCourse = async(e) => {
+   
+    const createCourse = async(e) => { 
+       
+       e.preventDefault(); 
         const encodedCreds = btoa(
             `${props.creds.emailAddress}:${props.creds.password}`
           );
-        e.preventDefault(); 
+       
    await fetch('http://localhost:5000/api/courses', {
         method: 'POST', 
         headers : {
@@ -30,14 +33,35 @@ function CreateCourse(props)  {
             Authorization: `Basic ${encodedCreds}`,
         }, 
         body: JSON.stringify(course)
+    }).then((res) =>  res.json())
+    .then((data) => {
+        if(data.message) {
+          setData(data.message.errors)
+            
+        }else{
+            nav('/course/' + data)
+        }
     })
-    .then(res => res.json()) 
     .catch((err) => {
-        console.log(err)
-    })
-    nav('/'); 
-}
+        console.log('error message', err)
+    }); 
+        
+    
+      readMap(); 
+    }
 
+
+const readMap = () => {
+    data.map((message => {
+        if(message.message === 'A title is required') {
+            console.log('title!!')
+             setData({...data, title: 'Please provide a value for "Title"'})
+        } if(message.message === 'A description is required'){
+            console.log('desc!!')
+            return setData({...data, desc: 'Please provide a value for "Description"'})
+        }
+        }))
+}
 
     return(
         <body> 
@@ -48,13 +72,27 @@ function CreateCourse(props)  {
                 <h2>Create Course</h2>
 
                 {/* TODO: RENDER VALIDATION */}
+                {data ? 
                 <div className="validation--errors">
+                
                     <h3>Validation Errors</h3>
                     <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
+                            
+                             <li>{data.title}</li>
+                            
+                            
+                            <li>{data.desc}</li>
+                        
+                        
+                    
+                         
+                        
+                        
+                          
                     </ul>
                 </div>
+                : ''
+                }
                 <form onSubmit={createCourse}>
                     <div className="main--flex">
                         <div>
