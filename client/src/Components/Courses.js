@@ -7,6 +7,7 @@ function Courses(props) {
   const [courses, setCourse] = useState([]);
 
   useEffect(() => {
+
     async function fetchData() {
       await fetch("http://localhost:5000/api/courses")
       .then((res) => res.json())
@@ -14,9 +15,9 @@ function Courses(props) {
   };
       fetchData(); 
   }, []);
-
+ 
   return (
-    
+   
     
 
     <div className="wrap main--grid">

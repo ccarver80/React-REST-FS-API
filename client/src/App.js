@@ -17,14 +17,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   const [userLoginInfo, setLoginInfo] = useState({}); //User Login info from UserSignIn component
   const [userAuth, setAuth] = useState(false); // True/False if user is logged in or not
-  const [name, setUserName] = useState({}); //Gets users first name after fetch request to api was successful 
+  const [name, setUserName] = useState({
+    firstName: '',
+    id: ''
+  }); //Gets users first name and id after fetch request to api was successful 
+
+
+  const [errorMessage, setErrorMessage] = useState('')
 
   const getInfo = (value) => setLoginInfo(value); //gets login info from UserSignIn component
+  const removeLoginInfo = (value) => setLoginInfo(value); //gets the empty object back from UserSignOut component
+  
 
-
-  useEffect(() => {
-    //Function to handle the userLoginInfo from "UserSignin.js" and get Basic Authorization.
+  useEffect(async() => {
+   
     const sendUserInfo = async (e) => {
+      
+      
       const encodedCreds = btoa(
         `${userLoginInfo.emailAddress}:${userLoginInfo.password}`
       );
@@ -37,37 +46,47 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.firstName) {
+          
             //If data.firstname exists, that means the fetch properly authorized, sends username to header and setAuth to true
-            setUserName(data.firstName);
-            setAuth(true);
-          } else {
-            setUserName({}); //If signed out button is clicked, clears name object
-            setAuth(false, data); // and returns false to auth
+            if(data.firstName) {
+              setUserName({
+                firstName: data.firstName,
+                id: data.id
+              })  
+              setAuth(true);
+              console.log('NAME', name)
+
+            }
+            else {
+              setErrorMessage(data.message)//sends error message back to login
+              setUserName({}); //If signed out button is clicked, clears name object
+              setAuth(false); // and returns false to auth
+            }
           }
-        })
+        )
         .catch((err) => {
           console.log("There seems to be an error:", err);
         });
-    };
+     
+  }
     //calls the function anytime the userLoginInfo state changes.
     sendUserInfo();
   }, [userLoginInfo]);
 
-  const removeLoginInfo = (value) => setLoginInfo(value); //gets the empty object back from UserSignOut component
+  
 //==============================================================================================================================//
   return (
     <BrowserRouter>
       <Header auth={userAuth} name={name} />
       <Routes>
         <Route exact path="/" element={<Courses />} />
-        <Route path="/course/:id" element={<CourseDetail />} />
-        <Route path="/sign-up" element={<UserSignUp />} />
+        <Route path="/course/:id" element={<CourseDetail auth={userAuth} userId={name.id} />} />
+        <Route path="/sign-up" element={<UserSignUp onLogin={getInfo} />} />
         <Route
           path="/sign-in"
-          element={<UserSignIn auth={userAuth} onLogin={getInfo} />}
+          element={<UserSignIn auth={userAuth} error={errorMessage} onLogin={getInfo} />}
         />
-        <Route path="/create-course" element={<CreateCourse />} />
+        <Route path="/create-course" element={<CreateCourse name={name}/>} />
         <Route path="/update-course/:id" element={<UpdateCourse />} />
         <Route
           path="/sign-out"

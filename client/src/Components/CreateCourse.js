@@ -1,25 +1,38 @@
-import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from 'react-router-dom'
 
-function CreateCourse()  {
 
-    const [course, setCourse] = useState({})
 
+function CreateCourse(props)  {
+
+    const nav = useNavigate();
+
+    const [course, setCourse] = useState({
+        title: '',
+        description: '',
+        estimatedTime: '',
+        materialsNeeded: '',
+        userId: props.name.id,
+
+    })
+
+    
 
     const createCourse = async(e) => {
+        
         e.preventDefault(); 
    await fetch('http://localhost:5000/api/courses', {
         method: 'POST', 
         headers : {
             'Content-Type': 'application/json', 
         }, 
-        body: JSON.stringify()
+        body: JSON.stringify(course)
     })
-    .then(res => console.log(res)) 
+    .then(res => res.json()) 
     .catch((err) => {
         console.log(err)
     })
-    
+    nav('/'); 
 }
 
 
@@ -28,11 +41,11 @@ function CreateCourse()  {
        
         
         <main>
-            <div class="wrap">
+            <div className="wrap">
                 <h2>Create Course</h2>
 
                 {/* TODO: RENDER VALIDATION */}
-                <div class="validation--errors">
+                <div className="validation--errors">
                     <h3>Validation Errors</h3>
                     <ul>
                         <li>Please provide a value for "Title"</li>
@@ -40,12 +53,12 @@ function CreateCourse()  {
                     </ul>
                 </div>
                 <form onSubmit={createCourse}>
-                    <div class="main--flex">
+                    <div className="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
 
-                            <p>By Joe Smith</p>
+                            <p>By {}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>

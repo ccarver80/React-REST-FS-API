@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, Link } from "react-router-dom";
 
-function CourseDetail() {
+function CourseDetail(props) {
   const [course, setCourse] = useState([]);
 
   let params = useParams(); //Gets the ":id" Param from the url clicked
@@ -18,19 +18,27 @@ function CourseDetail() {
     fetchData();
   }, [setCourse] );
 
+  console.log(course)
   return (
       // {/* Link buttons */}
       <main>
         <div className="actions--bar">
           <div className="wrap">
-            
+          
+          {/* Checks for authentication from app.js, and if the user is equal to author of article */}
+            {props.auth && props.userId === course.userId ? 
             <Link className="button" to={"/update-course/" + params.id}>
               Update Course
             </Link>
-            
+            : ""}
+
+            {/* rinse and repeat code from above */}
+            {props.auth && props.userId === course.userId ? 
             <Link className="button" to="/delete-course">
               Delete Course
             </Link>
+            : ''
+            } 
 
             <Link className="button button-secondary" to="/">
               Return to List

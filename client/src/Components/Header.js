@@ -14,7 +14,7 @@ function Header(props) {
             <ul className="header--signedout">
               <li>
               {props.auth
-                ? <li>{`Welcome ${props.name}`}</li> //Auth true, Show name
+                ? <li>{`Welcome ${props.name.firstName}`}</li> //Auth true, Show name
                 : <Link to="/sign-up">Sign up</Link> //Auth false, Sign up link
               }
               </li>

@@ -63,9 +63,9 @@ router.get("/api/courses/:id", async (req, res) => {
 
 //-----------------POST ROUTES-----------------------//
 
-router.post("/api/courses/", authUser, async (req, res) => {
+router.post("/api/courses/",  async (req, res) => {
   try {
-   
+      console.log(req.body)
       const newCourse = await courses.create(req.body);
       res.location("/api/course/" + newCourse.id);
       res.status(201);
@@ -74,7 +74,7 @@ router.post("/api/courses/", authUser, async (req, res) => {
     
   } catch (err) {
     res.json({
-      message: err.errors.map(erry => erry.message)
+      message: err
     });
   }
 });

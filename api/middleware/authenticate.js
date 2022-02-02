@@ -19,12 +19,12 @@ exports.authUser = async (req, res, next) => {
       }else {
         res.status(401)
         res.json({
-          message: "Access Denied",
+          message: "Sorry wrong password please try again.",
         });
       }
       }else {
       res.json({
-        message: "Username does not exist",
+        message: "This email address does not exist.",
       });
     }
   } 

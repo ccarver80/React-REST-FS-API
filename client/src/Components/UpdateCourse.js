@@ -58,7 +58,7 @@ function UpdateCourse() {
                             <input id="estimatedTime" name="estimatedTime" type="text" placeholder={course.estimatedTime} onChange={(e) => setCourse({...course, estimatedTime: e.target.value})} />
 
                             <label for="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded}></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" placeholder={course.materialsNeeded} onChange={(e) => setCourse({...course, materialsNeeded: e.target.value})}></textarea>
                         </div>
                     </div>
                     <button class="button" type="submit">Update Course</button><Link to='/'><button class="button button-secondary">Cancel</button></Link>

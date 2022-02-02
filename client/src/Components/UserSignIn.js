@@ -5,6 +5,10 @@ const UserSignIn = (props) => {
   const [userLoginInfo, setUserInfo] = useState({});
 
   const nav = useNavigate();
+  
+  const clearData = () => {
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +17,7 @@ const UserSignIn = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.auth);
+    ;
     if (props.auth) {
       nav("/");
     }
@@ -24,6 +28,8 @@ const UserSignIn = (props) => {
       <main>
         <div className="form--centered">
           <h2>Sign In</h2>
+          <h2>{props.error}</h2>
+          
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="emailAddress">Email Address</label>
@@ -50,7 +56,7 @@ const UserSignIn = (props) => {
               Sign In
             </button>
             <Link to="/">
-              <button className="button button-secondary">Cancel</button>
+              <button onClick={clearData} className="button button-secondary">Cancel</button>
             </Link>
           </form>
           <p>

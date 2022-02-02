@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function UserSignUp() {
+function UserSignUp(props) {
   const [userInfo, setUserInfo] = useState({});
 
+  const nav = useNavigate(); 
+  
   const sendUserInfo = async (e) => {
     e.preventDefault();
     console.log(userInfo);
@@ -16,11 +18,11 @@ function UserSignUp() {
       body: JSON.stringify(userInfo),
     })
       .then((res) => res.json())
-      .then((data) => console.log('data:',data))
+      .then((data) => props.onLogin(userInfo))
       .catch((err) => {
         console.log(err);
       });
-  
+      nav('/')
   };
 
   return (
