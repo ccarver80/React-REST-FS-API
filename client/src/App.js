@@ -24,6 +24,7 @@ function App() {
     id: ''
   }); //Gets users first name and id after fetch request to api was successful 
 
+  const [error, setErrorMessage] = useState();
 
 
   const getInfo = (value) => setLoginInfo(value); //gets login info from UserSignIn component
@@ -57,7 +58,7 @@ function App() {
               
             }
             else {
-              
+              setErrorMessage(data.message)
               setUserName({}); //If signed out button is clicked, clears name object
               setAuth(false); // and returns false to auth
             }
@@ -84,7 +85,7 @@ function App() {
 
         <Route path="/sign-up" element={<UserSignUp onLogin={getInfo} />} />
 
-        <Route path="/sign-in" element={<UserSignIn auth={userAuth} onLogin={getInfo} />}/>
+        <Route path="/sign-in" element={<UserSignIn auth={userAuth} error={error}  onLogin={getInfo} />}/>
 {/* ===============================Protected Routes ================================================================= */}
         <Route element={<PrivateRoute auth={userAuth}/>}>
 

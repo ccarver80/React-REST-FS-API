@@ -10,15 +10,9 @@ function CreateCourse(props)  {
     const [course, setCourse] = useState({
         userId: props.name.id,
     })
-     const [data, setData] = useState(12)
+     const [data, setData] = useState()
    
-    // ======================CLEARS ALL DATA===========================
-            useEffect(() => {
-                
-                setData()
-            }, [setData])
-
-   
+    
     const createCourse = async(e) => { 
        
        e.preventDefault(); 
@@ -37,7 +31,7 @@ function CreateCourse(props)  {
     .then((data) => {
         if(data.message) {
           setData(data.message.errors)
-            
+           
         }else{
             nav('/course/' + data)
         }
@@ -46,22 +40,12 @@ function CreateCourse(props)  {
         console.log('error message', err)
     }); 
         
-    
-      readMap(); 
+   
+     
     }
 
 
-const readMap = () => {
-    data.map((message => {
-        if(message.message === 'A title is required') {
-            console.log('title!!')
-             setData({...data, title: 'Please provide a value for "Title"'})
-        } if(message.message === 'A description is required'){
-            console.log('desc!!')
-            return setData({...data, desc: 'Please provide a value for "Description"'})
-        }
-        }))
-}
+
 
     return(
         <body> 
@@ -77,18 +61,9 @@ const readMap = () => {
                 
                     <h3>Validation Errors</h3>
                     <ul>
-                            
-                             <li>{data.title}</li>
-                            
-                            
-                            <li>{data.desc}</li>
-                        
-                        
-                    
-                         
-                        
-                        
-                          
+                            {
+                        data.map(message => <li>{message.message}</li>)
+                            } 
                     </ul>
                 </div>
                 : ''

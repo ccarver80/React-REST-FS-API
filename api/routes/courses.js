@@ -67,6 +67,7 @@ router.post("/api/courses/", authUser,  async (req, res) => {
   try {
       
       const newCourse = await courses.create(req.body);
+      
       res.location("/api/course/" + newCourse.id);
       res.status(201);
       res.json(newCourse.id)
@@ -92,7 +93,10 @@ router.put("/api/courses/:id", authUser, async (req, res) => {
     if (findCourse) {
       //----IF ITS A VALID COURSE--//
       const updateCourse = await findCourse.update(req.body);
-      res.sendStatus(204);
+      res.status(204)
+      res.end()
+      
+      
     } else {
       res.json({
         message: "Could not find course",
@@ -100,9 +104,9 @@ router.put("/api/courses/:id", authUser, async (req, res) => {
     }
   } catch (err) {
     res.json({
-      message: "Something went wrong",
+      message: err
     });
-    console.log(err);
+    
   }
 });
 

@@ -16,13 +16,9 @@ exports.authUser = async (req, res, next) => {
       if (authenticate) {
         req.currentUser = user; 
         next(); 
-      }else {
-        res.status(401)
-        res.json({
-          message: "Sorry wrong password please try again.",
-        });
       }
       }else {
+      res.status(401)
       res.json({
         message: "This email address does not exist.",
       });

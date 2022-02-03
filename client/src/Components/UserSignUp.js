@@ -4,6 +4,7 @@ import { useState } from "react";
 
 function UserSignUp(props) {
   const [userInfo, setUserInfo] = useState({});
+  const [error, setErrorMessage] = useState()
 
   const nav = useNavigate(); 
   
@@ -18,11 +19,19 @@ function UserSignUp(props) {
       body: JSON.stringify(userInfo),
     })
       .then((res) => res.json())
-      .then((data) => props.onLogin(userInfo))
+      .then((data) => {
+        console.log("dfdsjfa", data.message)
+        if(data.message){
+          setErrorMessage(data.message)
+        }else {
+          props.onLogin(userInfo)
+          nav('/')
+        }
+      })
       .catch((err) => {
-        console.log(err);
+        console.log("catch", err);
       });
-      nav('/')
+      console.log(error)
   };
 
   return (
@@ -30,6 +39,18 @@ function UserSignUp(props) {
       <main>
         <div className="form--centered">
           <h2>Sign Up</h2>
+          {error ? 
+                <div className="validation--errors">
+                
+                    <h3>Validation Errors</h3>
+                    <ul>
+                            {
+                        error.map(message => <li>{message}</li>)
+                            } 
+                    </ul>
+                </div>
+                : ''
+                }
 
           <form onSubmit={sendUserInfo}>
             <label htmlFor="firstName">First Name</label>
@@ -41,7 +62,7 @@ function UserSignUp(props) {
               onChange={(e) =>
                 setUserInfo({ ...userInfo, firstName: e.target.value })
               }
-              required
+             
             />
             <label htmlFor="lastName">Last Name</label>
             <input

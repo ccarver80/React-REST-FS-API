@@ -19,27 +19,37 @@ function UpdateCourse(props) {
         fetchData();
       }, [setCourse]);
     
-      const updateCourse = async(e) => {
-        const encodedCreds = btoa(
-            `${props.creds.emailAddress}:${props.creds.password}`
-          );
+      const updateCourse = async(e) => { 
+       
         e.preventDefault(); 
-        await fetch('http://localhost:5000/api/courses/' + params.id, {
-             method: 'PUT', 
-             headers : {
-                 'Content-Type': 'application/json', 
-                 Authorization: `Basic ${encodedCreds}`,
-             }, 
-             body: JSON.stringify(course)
-         })
-         .then(res => console.log(res)) 
-         .catch((err) => {
-             console.log(err)
-         })
-         nav('/course/' + params.id)
-      }
-
-
+         const encodedCreds = btoa(
+             `${props.creds.emailAddress}:${props.creds.password}`
+           );
+        
+    await fetch('http://localhost:5000/api/courses/' + params.id, {
+         method: 'PUT', 
+         headers : {
+             'Content-Type': 'application/json', 
+             Authorization: `Basic ${encodedCreds}`,
+         }, 
+         body: JSON.stringify(course)
+     }).then((res) =>  res.json())
+     .then((data) => {
+         if(data.message) {
+           setCourse(data.message.errors)
+            
+         }else{
+             nav('/course/' + data)
+         }
+        })
+     
+     .catch((err) => {
+         console.log('error message', err)
+     }); 
+         
+    
+      
+     }
     return(
         <body>
             
@@ -50,19 +60,19 @@ function UpdateCourse(props) {
                     <div class="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" placeholder={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
+                            <input id="courseTitle" name="courseTitle" type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
 
-                            <p>By {course.firstName}</p>
+                            <p>By {course.firstName} {course.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" placeholder={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>
+                            <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>
                         </div>
                         <div>
                             <label for="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" placeholder={course.estimatedTime} onChange={(e) => setCourse({...course, estimatedTime: e.target.value})} />
+                            <input id="estimatedTime" name="estimatedTime" type="text" value={course.estimatedTime} onChange={(e) => setCourse({...course, estimatedTime: e.target.value})} />
 
                             <label for="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" placeholder={course.materialsNeeded} onChange={(e) => setCourse({...course, materialsNeeded: e.target.value})}></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={(e) => setCourse({...course, materialsNeeded: e.target.value})}></textarea>
                         </div>
                     </div>
                     <button class="button" type="submit">Update Course</button><Link to='/'><button class="button button-secondary">Cancel</button></Link>

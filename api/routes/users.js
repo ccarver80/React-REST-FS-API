@@ -23,7 +23,7 @@ router.post("/api/users", async (req, res) => {
   try {
     const newUser = await users.create(req.body);
     res.location("/");
-    res.status(201).json({message: "Thanks for signing up!"});
+    res.status(201).json("");
   } catch (err) {
     res.status(400);
     res.json({

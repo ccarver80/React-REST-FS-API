@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const UserSignIn = (props) => {
   const [userLoginInfo, setUserInfo] = useState({});
+  const [errorFromApp, setErrorMessage] = useState()
 
   const nav = useNavigate();
   
@@ -13,7 +14,7 @@ const UserSignIn = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await props.onLogin(userLoginInfo);
-    
+    setErrorMessage(props.error)
   };
 
   useEffect(() => {
@@ -28,7 +29,20 @@ const UserSignIn = (props) => {
       <main>
         <div className="form--centered">
           <h2>Sign In</h2>
-          <h2>{props.error}</h2>
+          
+          {/* Validation from api */}
+          {errorFromApp ? 
+                <div className="validation--errors">
+                
+                    <h3>Validation Errors</h3>
+                    <ul>
+                            
+                        <li>{errorFromApp}</li>
+                            
+                    </ul>
+                </div>
+                : ''
+                }
           
 
           <form onSubmit={handleSubmit}>
