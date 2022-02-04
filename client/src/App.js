@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles/global.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
 
 //==========Components:========================================================//
   import Header from "./Components/Header";
@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
   import UpdateCourse from "./Components/UpdateCourse";
   import UserSignOut from "./Components/UserSignOut";
   import PrivateRoute from "./PrivateRoute";
+  import NotFound from "./Components/NotFound";
 //=============================================================================//
 
 
@@ -83,19 +84,20 @@ function App() {
 
         <Route path="/course/:id" element={<CourseDetail auth={userAuth} creds={userLoginInfo} userId={name.id} />} />
 
-        <Route path="/sign-up" element={<UserSignUp onLogin={getInfo} />} />
+        <Route path="/signup" element={<UserSignUp onLogin={getInfo} />} />
 
-        <Route path="/sign-in" element={<UserSignIn auth={userAuth} error={error}  onLogin={getInfo} />}/>
+        <Route path="/signin" element={<UserSignIn auth={userAuth} error={error}  onLogin={getInfo} />}/>
 {/* ===============================Protected Routes ================================================================= */}
         <Route element={<PrivateRoute auth={userAuth}/>}>
 
-          <Route path="/create-course" element={<CreateCourse creds={userLoginInfo} name={name}/>} />
+          <Route path="/courses/create" element={<CreateCourse creds={userLoginInfo} name={name}/>} />
 
-          <Route path="/update-course/:id" element={<UpdateCourse creds ={userLoginInfo}/>} />
+          <Route path="/courses/:id/update" element={<UpdateCourse creds ={userLoginInfo}/>} />
 
         </Route>
 {/* ================================================================================================================== */}
-        <Route path="/sign-out" element={<UserSignOut removeLoginInfo={removeLoginInfo} />} />
+        <Route path="/signout" element={<UserSignOut removeLoginInfo={removeLoginInfo} />} />
+        <Route path="*" element={<NotFound />} /> 
 
         
       </Routes>

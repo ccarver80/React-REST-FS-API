@@ -15,13 +15,13 @@ function Header(props) {
               <li>
               {props.auth
                 ? <li>{`Welcome ${props.name.firstName}`}</li> //Auth true, Show name
-                : <Link to="/sign-up">Sign up</Link> //Auth false, Sign up link
+                : <Link to="/signup">Sign up</Link> //Auth false, Sign up link
               }
               </li>
               <li>
               {props.auth
-                ? <Link to="/sign-out">Sign Out</Link> //Auth true Sign out link next to name
-                : <Link to="/sign-in">Sign In</Link> //Auth false Sign in link next to sign up link
+                ? <Link to="/signout">Sign Out</Link> //Auth true Sign out link next to name
+                : <Link to="/signin">Sign In</Link> //Auth false Sign in link next to sign up link
               }
               </li>
             </ul>

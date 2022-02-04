@@ -94,7 +94,7 @@ router.put("/api/courses/:id", authUser, async (req, res) => {
       //----IF ITS A VALID COURSE--//
       const updateCourse = await findCourse.update(req.body);
       res.status(204)
-      res.end()
+      res.json(updateCourse.id)
       
       
     } else {

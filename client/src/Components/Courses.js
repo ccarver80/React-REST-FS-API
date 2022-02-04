@@ -32,7 +32,7 @@ function Courses(props) {
       {/* Add new course  */}
       <Link
         className="course--module course--add--module"
-        to="/create-course"
+        to="/courses/create"
       >
         <span className="course--add--title">
           <svg

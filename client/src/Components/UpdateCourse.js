@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 
-import { Link, useParams, Navigate, useNavigate} from 'react-router-dom'
+import { Link, useParams, useNavigate} from 'react-router-dom'
 
 function UpdateCourse(props) {
     const [course, setCourse] = useState({});
+    const [error, setErrorMessage] = useState()
 
     let params = useParams(); //Gets the ":id" Param from the url clicked
 
@@ -17,7 +18,7 @@ function UpdateCourse(props) {
             .catch((err) => console.log("OH NO:", err));
         }
         fetchData();
-      }, [setCourse]);
+      }, [setCourse, params.id]);
     
       const updateCourse = async(e) => { 
        
@@ -36,8 +37,7 @@ function UpdateCourse(props) {
      }).then((res) =>  res.json())
      .then((data) => {
          if(data.message) {
-           setCourse(data.message.errors)
-            
+           setErrorMessage(data.message.errors)
          }else{
              nav('/course/' + data)
          }
@@ -56,6 +56,18 @@ function UpdateCourse(props) {
             <main>
             <div class="wrap">
                 <h2>Update Course</h2>
+                {error ? 
+                <div className="validation--errors">
+                
+                    <h3>Validation Errors</h3>
+                    <ul>
+                            {
+                        error.map(message => <li>{message.message}</li>)
+                            } 
+                    </ul>
+                </div>
+                : ''
+                }
                 <form onSubmit={updateCourse}>
                     <div class="main--flex">
                         <div>

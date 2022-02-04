@@ -50,7 +50,7 @@ function CourseDetail(props) {
           
           {/* Checks for authentication from app.js, and if the user is equal to author of article, to show link to update the class */}
             {props.auth && props.userId === course.userId ? 
-            <Link className="button" to={"/update-course/" + params.id}>
+            <Link className="button" to={"/courses/" + params.id + "/update"}>
               Update Course
             </Link>
             : ""}
