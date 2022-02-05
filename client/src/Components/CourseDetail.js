@@ -21,7 +21,7 @@ function CourseDetail(props) {
         .catch((err) => console.log("OH NO", err));
     }
     fetchData();
-  }, [setCourse] );
+  }, [setCourse, params.id] );
 
 
   const deleteCourse = async(e) => {
@@ -36,10 +36,15 @@ function CourseDetail(props) {
           "Content-Type": "application/json",
           Authorization: `Basic ${encodedCreds}`,
         },
-  }).then(res => res.json())
-    .then(data => console.log(data))
+  }).then((res) => {
+    if(res.status === 204) {
+      nav('/')
+    }else {
+      return res.json()
+    }
+  })
     .catch((err) => console.log(err))
-    nav('/')
+    
 }; 
 
   return (

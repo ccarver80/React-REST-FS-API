@@ -33,15 +33,25 @@ function UpdateCourse(props) {
              Authorization: `Basic ${encodedCreds}`,
          }, 
          body: JSON.stringify(course)
-     }).then(res =>  res.json())
-     .then((data) => {
-         if(data.message) {
-           setErrorMessage(data.message.errors)
-         }else{
-             nav('/course/' + data)
+     }).then((res) => {
+         if(res.status === 204) {
+             nav('/course/' + params.id)
+         }else {
+            return res.json()
          }
-        })
+     })
      
+     .then(data => {
+        try{ 
+         if(data.message){
+             
+             setErrorMessage(data.message.errors)
+         }
+        }catch{
+           
+        }
+         
+        })
      .catch((err) => {
          console.log('error message', err)
      }); 
