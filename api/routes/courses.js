@@ -93,7 +93,7 @@ router.put("/api/courses/:id", authUser, async (req, res) => {
     if (findCourse) {
       //----IF ITS A VALID COURSE--//
       const updateCourse = await findCourse.update(req.body);
-      res.status(204)
+      res.status(204);
       res.json(updateCourse.id)
       
       
@@ -114,7 +114,6 @@ router.put("/api/courses/:id", authUser, async (req, res) => {
 
 router.delete("/api/courses/:id", authUser, async (req, res) => {
   try {
-    console.log('DELETING')
     const findCourse = await courses.findOne({
       where: {
         id: req.params.id,

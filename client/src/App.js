@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles/global.css";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 //==========Components:========================================================//
   import Header from "./Components/Header";

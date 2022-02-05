@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {Link, useNavigate} from 'react-router-dom'
 
 
@@ -71,23 +71,23 @@ function CreateCourse(props)  {
                 <form onSubmit={createCourse}>
                     <div className="main--flex">
                         <div>
-                            <label for="courseTitle">Course Title</label>
+                            <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} />
 
                             <p>By {props.name.firstName} {props.name.lastName}</p>
 
-                            <label for="courseDescription">Course Description</label>
+                            <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" value={course.description} onChange={(e) => setCourse({...course, description: e.target.value})}></textarea>
                         </div>
                         <div>
-                            <label for="estimatedTime">Estimated Time</label>
+                            <label htmlFor="estimatedTime">Estimated Time</label>
                             <input id="estimatedTime" name="estimatedTime" type="text" value={course.estimatedTime} onChange={(e) => setCourse({...course, estimatedTime: e.target.value})} />
 
-                            <label for="materialsNeeded">Materials Needed</label>
+                            <label htmlFor="materialsNeeded">Materials Needed</label>
                             <textarea id="materialsNeeded" name="materialsNeeded" value={course.materialsNeeded} onChange={(e) => setCourse({...course, materialsNeeded: e.target.value})}></textarea>
                         </div>
                     </div>
-                    <button class="button" type="submit">Create Course</button><Link to='/' ><button class="button button-secondary">Cancel</button></Link>
+                    <button className="button" type="submit">Create Course</button><Link to='/' ><button className="button button-secondary">Cancel</button></Link>
                 </form>
             </div>
         </main>

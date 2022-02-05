@@ -10,7 +10,6 @@ function UserSignUp(props) {
   
   const sendUserInfo = async (e) => {
     e.preventDefault();
-    console.log(userInfo);
     await fetch("http://localhost:5000/api/users", {
       method: "POST",
       headers: {
@@ -20,7 +19,6 @@ function UserSignUp(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("dfdsjfa", data.message)
         if(data.message){
           setErrorMessage(data.message)
         }else {
@@ -31,7 +29,6 @@ function UserSignUp(props) {
       .catch((err) => {
         console.log("catch", err);
       });
-      console.log(error)
   };
 
   return (
